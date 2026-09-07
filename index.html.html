@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Huellas — Adopción y bienestar de mascotas</title>
+<style>
+  :root{
+    --verde:   #2F4739;
+    --verde-2: #3D5B49;
+    --hueso:   #F4F0E6;
+    --papel:   #FFFDF8;
+    --oxido:   #B5551E;
+    --mostaza: #D9A441;
+    --tinta:   #23291F;
+    --linea:   #E1DACB;
+    --radius:  14px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:"Segoe UI", "Trebuchet MS", Verdana, sans-serif;
+    background:var(--hueso);
+    color:var(--tinta);
+    line-height:1.5;
+  }
+  h1,h2,h3{
+    font-family:Georgia, "Times New Roman", serif;
+    margin:0 0 .4em 0;
+    color:var(--verde);
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;height:auto;display:block;}
+
+  /* ================= HEADER / NAV (Flexbox) ================= */
+  header{
+    background:var(--verde);
+    color:var(--papel);
+    position:sticky;top:0;z-index:10;
+  }
+  .nav-bar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    padding:14px 6vw;
+    gap:12px;
+  }
+  .logo{
+    display:flex;align-items:center;gap:.5em;
+    font-family:Georgia,serif;font-weight:bold;
+    font-size:clamp(1.2rem, 4vw, 1.6rem);
+    color:var(--papel);
+  }
+  .logo .paw{color:var(--mostaza);font-size:1.3em;}
+  nav ul{
+    display:flex;
+    flex-wrap:wrap;
+    list-style:none;
+    gap:1.6em;
+    margin:0;padding:0;
+    font-size:.95rem;
+  }
+  nav a{opacity:.9;padding:.3em 0;border-bottom:2px solid transparent;transition:.2s;}
+  nav a:hover, nav a:focus-visible{opacity:1;border-color:var(--mostaza);}
+  .cta-btn{
+    background:var(--oxido);color:#fff;padding:.55em 1.2em;
+    border-radius:30px;font-weight:600;font-size:.9rem;white-space:nowrap;
+  }
+  #menu-toggle{display:none;}
+  .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+  .burger span{width:26px;height:3px;background:#fff;border-radius:2px;}
+
+  /* ================= HERO (Flexbox) ================= */
+  .hero{
+    background:linear-gradient(180deg, var(--verde) 0%, var(--verde-2) 70%);
+    color:var(--papel);
+    padding:clamp(2.5rem, 6vw, 5rem) 6vw clamp(3rem, 7vw, 6rem);
+  }
+  .hero-flex{
+    display:flex;
+    flex-wrap:wrap;
+    gap:3vw;
+    align-items:center;
+    max-width:1120px;margin:0 auto;
+  }
+  .hero-flex > .hero-text{flex:1 1 480px;}
+  .hero-flex > .tag-card{flex:1 1 320px; max-width:420px;}
+  .hero h1{
+    color:#fff;
+    font-size:clamp(2rem, 5vw, 3.2rem);
+    line-height:1.1;
+  }
+  .hero p{font-size:clamp(1rem,2vw,1.15rem);opacity:.9;max-width:46ch;}
+  .hero .tag{
+    display:inline-block;background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.35);
+    padding:.35em .9em;border-radius:30px;font-size:.8rem;
+    letter-spacing:.06em;text-transform:uppercase;margin-bottom:1em;
+  }
+  .hero-actions{display:flex;gap:1em;margin-top:1.6em;flex-wrap:wrap;}
+  .btn-primary{background:var(--mostaza);color:var(--tinta);padding:.8em 1.6em;border-radius:30px;font-weight:700;}
+  .btn-ghost{border:1px solid rgba(255,255,255,.6);color:#fff;padding:.8em 1.6em;border-radius:30px;font-weight:600;}
+
+  .tag-card{
+    background:var(--papel);color:var(--tinta);
+    border-radius:var(--radius);
+    padding:1.4em;
+    box-shadow:0 18px 40px rgba(0,0,0,.25);
+  }
+  .tag-card .paw-big{font-size:2.4rem;}
+  .stat-row{display:flex;gap:1.4em;margin-top:1em;flex-wrap:wrap;}
+  .stat b{display:block;font-size:1.5rem;color:var(--oxido);font-family:Georgia,serif;}
+  .stat span{font-size:.78rem;color:#555;}
+
+  /* ================= SECTION HEADERS ================= */
+  section{padding:clamp(2.5rem,6vw,4.5rem) 6vw;}
+  .section-head{max-width:640px;margin:0 auto 2.2em;text-align:left;}
+  .eyebrow{
+    color:var(--oxido);font-weight:700;font-size:.8rem;
+    letter-spacing:.1em;text-transform:uppercase;
+  }
+
+  /* ================= SOBRE HUELLAS (Flexbox) ================= */
+  #sobre{background:var(--papel);}
+  .sobre-flex{
+    display:flex;flex-wrap:wrap;gap:2.4em;
+    max-width:1120px;margin:0 auto;align-items:flex-start;
+  }
+  .sobre-flex > article{flex:2 1 420px;}
+  .sobre-flex > aside{flex:1 1 260px;}
+  .valor-list{display:flex;flex-direction:column;gap:1em;}
+  .valor-item{
+    background:var(--hueso);border-left:4px solid var(--mostaza);
+    border-radius:10px;padding:1em 1.2em;
+  }
+  .valor-item h3{font-size:1rem;margin-bottom:.2em;}
+  .valor-item p{margin:0;font-size:.88rem;color:#555;}
+
+  /* ================= FILTERS (Flexbox) ================= */
+  .filters{
+    display:flex;gap:1em;flex-wrap:wrap;
+    background:var(--papel);border:1px solid var(--linea);
+    border-radius:var(--radius);padding:1.2em;
+    max-width:1120px;margin:0 auto 2.4em;
+  }
+  .filters label{display:flex;flex-direction:column;font-size:.78rem;color:#555;gap:.35em;flex:1 1 140px;}
+  .filters select,.filters input{
+    padding:.6em;border:1px solid var(--linea);border-radius:8px;font-size:.9rem;background:#fff;
+  }
+  .filters button{
+    align-self:flex-end;background:var(--verde);color:#fff;border:none;
+    padding:.7em 1.4em;border-radius:8px;font-weight:600;cursor:pointer;flex:0 0 auto;
+  }
+
+  /* ================= PET CARDS (Flexbox) ================= */
+  .flex-cards{
+    max-width:1120px;margin:0 auto;
+    display:flex;flex-wrap:wrap;gap:1.3em;
+  }
+  .pet-card{
+    background:var(--papel);border:1px solid var(--linea);
+    border-radius:var(--radius);overflow:hidden;
+    flex:1 1 240px;
+    max-width:calc(25% - 1em);
+  }
+  .pet-photo{
+    aspect-ratio:4/3;width:100%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:3rem;color:#fff;
+  }
+  .p1{background:#C77B3F;} .p2{background:#5C7A63;} .p3{background:#B5551E;} .p4{background:#8B9A6B;}
+  .pet-info{padding:1em 1.1em 1.3em;}
+  .pet-info h3{font-size:1.05rem;margin-bottom:.15em;}
+  .pet-meta{font-size:.8rem;color:#666;margin-bottom:.7em;}
+  .pet-info a{font-size:.82rem;font-weight:700;color:var(--oxido);}
+
+  /* ================= HOW IT WORKS (Flexbox) ================= */
+  .flex-steps{
+    max-width:1120px;margin:0 auto;
+    display:flex;flex-wrap:wrap;gap:1.6em;
+  }
+  .step{
+    background:var(--papel);border-left:4px solid var(--mostaza);border-radius:10px;padding:1.4em;
+    flex:1 1 260px;
+  }
+  .step .num{font-family:Georgia,serif;color:var(--verde);font-size:1.6rem;font-weight:bold;}
+
+  /* ================= ADOPTION FORM ================= */
+  .form-section{background:var(--verde);color:var(--papel);}
+  .form-section .section-head h2{color:#fff;}
+  .form-section .eyebrow{color:var(--mostaza);}
+  form.card-form{
+    background:var(--papel);color:var(--tinta);
+    border-radius:var(--radius);padding:clamp(1.4em,3vw,2.4em);
+    max-width:1120px;margin:0 auto;
+    display:flex;flex-wrap:wrap;gap:1.1em 1.4em;
+  }
+  form.card-form .field{flex:1 1 260px;display:flex;flex-direction:column;}
+  form.card-form .full{flex:1 1 100%;}
+  form.card-form label{font-size:.85rem;font-weight:600;margin-bottom:.4em;}
+  form.card-form input,form.card-form select,form.card-form textarea{
+    padding:.7em .8em;border:1px solid var(--linea);border-radius:8px;font-size:.95rem;font-family:inherit;
+  }
+  form.card-form small{font-weight:400;color:#777;font-size:.75rem;margin-top:.3em;}
+  form.card-form button{
+    flex:1 1 100%;
+    background:var(--oxido);color:#fff;border:none;
+    padding:.85em 1.8em;border-radius:30px;font-weight:700;font-size:1rem;cursor:pointer;
+    max-width:260px;
+  }
+
+  /* ================= REFUGIOS ================= */
+  #refugios{background:var(--papel);}
+
+  /* ================= CONTACTO (sección real, Flexbox) ================= */
+  #contacto{background:var(--hueso);}
+  .contacto-flex{
+    display:flex;flex-wrap:wrap;gap:2.4em;
+    max-width:1120px;margin:0 auto;
+  }
+  .contacto-info{flex:1 1 280px;display:flex;flex-direction:column;gap:1em;}
+  .contacto-info .item{display:flex;gap:.8em;align-items:flex-start;}
+  .contacto-info .item b{display:block;font-size:.85rem;}
+  .contacto-info .item span{font-size:.85rem;color:#555;}
+  form.contact-form{
+    flex:2 1 380px;
+    background:var(--papel);border:1px solid var(--linea);
+    border-radius:var(--radius);padding:1.6em;
+    display:flex;flex-wrap:wrap;gap:1em 1.2em;
+  }
+  form.contact-form .field{flex:1 1 220px;display:flex;flex-direction:column;}
+  form.contact-form .full{flex:1 1 100%;}
+  form.contact-form label{font-size:.85rem;font-weight:600;margin-bottom:.4em;}
+  form.contact-form input,form.contact-form textarea{
+    padding:.7em .8em;border:1px solid var(--linea);border-radius:8px;font-size:.95rem;font-family:inherit;
+  }
+  form.contact-form button{
+    background:var(--verde);color:#fff;border:none;
+    padding:.8em 1.6em;border-radius:30px;font-weight:700;cursor:pointer;
+  }
+
+  /* ================= FOOTER (Flexbox) ================= */
+  footer{background:#1C2A20;color:#CBD3C8;padding:2.4em 6vw 1.6em;}
+  .footer-flex{
+    max-width:1120px;margin:0 auto;
+    display:flex;flex-wrap:wrap;gap:2em;
+  }
+  .footer-flex > div{flex:1 1 220px;}
+  footer h3{color:#fff;font-size:1.1rem;}
+  footer ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.5em;font-size:.88rem;}
+  .footer-bottom{
+    max-width:1120px;margin:2em auto 0;padding-top:1.2em;border-top:1px solid #33463A;
+    font-size:.78rem;display:flex;flex-wrap:wrap;justify-content:space-between;gap:.6em;color:#8FA093;
+  }
+
+  /* Visually-hidden skip link, shown on focus (accesibilidad) */
+  .skip-link{
+    position:absolute;left:-999px;top:auto;
+    background:var(--mostaza);color:var(--tinta);
+    padding:.6em 1em;border-radius:6px;font-weight:700;z-index:100;
+  }
+  .skip-link:focus{left:12px;top:12px;}
+
+  /* ============ RESPONSIVE — 2 breakpoints con Flexbox ============ */
+  @media (max-width:900px){
+    .pet-card{max-width:calc(50% - .65em);}
+    .footer-flex > div{flex:1 1 45%;}
+  }
+  @media (max-width:768px){
+    nav ul{
+      position:absolute;top:100%;left:0;right:0;
+      background:var(--verde-2);flex-direction:column;
+      padding:1em 6vw;gap:0;display:none;
+    }
+    #menu-toggle:checked ~ nav ul{display:flex;}
+    nav ul li{border-bottom:1px solid rgba(255,255,255,.12);}
+    nav a{display:block;padding:.9em 0;}
+    .burger{display:flex;}
+    .nav-bar .cta-btn{display:none;}
+    .pet-card{max-width:100%;}
+    .sobre-flex > article, .sobre-flex > aside{flex:1 1 100%;}
+    .hero .tag-card{order:2;}
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Saltar al contenido principal</a>
+
+<header>
+  <div class="nav-bar">
+    <a class="logo" href="#inicio"><span class="paw">🐾</span> Huellas</a>
+    <input type="checkbox" id="menu-toggle">
+    <nav aria-label="Navegación principal">
+      <ul>
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#sobre">Sobre Huellas</a></li>
+        <li><a href="#adopcion">Mascotas</a></li>
+        <li><a href="#refugios">Refugios</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+    <label class="burger" for="menu-toggle" aria-label="Abrir menú"><span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span></label>
+    <a class="cta-btn" href="#solicitud">Quiero adoptar</a>
+  </div>
+</header>
+
+<main id="main-content">
+
+  <!-- ============ INICIO ============ -->
+  <section class="hero" id="inicio">
+    <div class="hero-flex">
+      <div class="hero-text">
+        <span class="tag">Refugios + adoptantes, en un solo lugar</span>
+        <h1>Cada huella merece un hogar</h1>
+        <p>Huellas conecta refugios y fundaciones de bienestar animal con personas listas para adoptar. Busca, conoce su historia y postúlate en minutos.</p>
+        <div class="hero-actions">
+          <a class="btn-primary" href="#adopcion">Ver mascotas en adopción</a>
+          <a class="btn-ghost" href="#refugios">Soy un refugio</a>
+        </div>
+      </div>
+      <aside class="tag-card" aria-label="Resumen de la plataforma">
+        <div class="paw-big">🐾</div>
+        <h3>Ficha de adopción</h3>
+        <p style="font-size:.9rem;color:#555;margin:.2em 0 0;">Cada mascota tiene su propia historia, estado de salud y refugio responsable.</p>
+        <div class="stat-row">
+          <div class="stat"><b>128</b><span>mascotas activas</span></div>
+          <div class="stat"><b>34</b><span>refugios aliados</span></div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ SOBRE HUELLAS (Sobre mí / Proyecto) ============ -->
+  <section id="sobre">
+    <div class="section-head">
+      <span class="eyebrow">Sobre el proyecto</span>
+      <h2>¿Qué es Huellas?</h2>
+    </div>
+    <div class="sobre-flex">
+      <article>
+        <p>Huellas es una plataforma web desarrollada como proyecto de Ingeniería Web en la Universidad Manuela Beltrán, pensada para resolver un problema real: hoy en día, adoptar una mascota es un proceso disperso e informal, que ocurre sobre todo en publicaciones de redes sociales sin verificación ni seguimiento.</p>
+        <p>Nuestro objetivo es centralizar ese proceso en un solo lugar confiable: refugios y fundaciones registran y publican a sus mascotas, y los adoptantes pueden buscar, filtrar y postularse de forma clara y responsable, con toda la información de salud y contacto a la mano.</p>
+      </article>
+      <aside class="valor-list" aria-label="Valores del proyecto">
+        <div class="valor-item">
+          <h3>Transparencia</h3>
+          <p>Refugios verificados y fichas completas de cada mascota.</p>
+        </div>
+        <div class="valor-item">
+          <h3>Accesibilidad</h3>
+          <p>Un sitio responsivo, usable desde cualquier dispositivo.</p>
+        </div>
+        <div class="valor-item">
+          <h3>Tenencia responsable</h3>
+          <p>Contenido educativo y procesos de adopción con seguimiento.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ CATÁLOGO ============ -->
+  <section id="adopcion" style="background:var(--hueso);">
+    <div class="section-head">
+      <span class="eyebrow">Catálogo</span>
+      <h2>Mascotas en adopción</h2>
+      <p>Filtra por especie, tamaño, edad y ciudad para encontrar a tu próximo compañero.</p>
+    </div>
+
+    <form class="filters" aria-label="Filtros de búsqueda de mascotas" onsubmit="return false;">
+      <label for="f-especie">Especie
+        <select id="f-especie" name="especie">
+          <option value="">Todas</option>
+          <option>Perro</option>
+          <option>Gato</option>
+          <option>Otro</option>
+        </select>
+      </label>
+      <label for="f-tamano">Tamaño
+        <select id="f-tamano" name="tamano">
+          <option value="">Cualquiera</option>
+          <option>Pequeño</option>
+          <option>Mediano</option>
+          <option>Grande</option>
+        </select>
+      </label>
+      <label for="f-edad">Edad
+        <select id="f-edad" name="edad">
+          <option value="">Cualquiera</option>
+          <option>Cachorro</option>
+          <option>Joven</option>
+          <option>Adulto</option>
+        </select>
+      </label>
+      <label for="f-ciudad">Ciudad
+        <input type="text" id="f-ciudad" name="ciudad" placeholder="Ej: Bogotá">
+      </label>
+      <button type="submit">Buscar</button>
+    </form>
+
+    <div class="flex-cards">
+      <article class="pet-card">
+        <div class="pet-photo p1" aria-hidden="true">🐕</div>
+        <div class="pet-info">
+          <h3>Manchas</h3>
+          <p class="pet-meta">Perro · Mediano · 2 años · Bogotá</p>
+          <a href="#">Ver ficha completa →</a>
+        </div>
+      </article>
+      <article class="pet-card">
+        <div class="pet-photo p2" aria-hidden="true">🐈</div>
+        <div class="pet-info">
+          <h3>Toby</h3>
+          <p class="pet-meta">Gato · Pequeño · 1 año · Medellín</p>
+          <a href="#">Ver ficha completa →</a>
+        </div>
+      </article>
+      <article class="pet-card">
+        <div class="pet-photo p3" aria-hidden="true">🐕</div>
+        <div class="pet-info">
+          <h3>Luna</h3>
+          <p class="pet-meta">Perra · Grande · 4 años · Cali</p>
+          <a href="#">Ver ficha completa →</a>
+        </div>
+      </article>
+      <article class="pet-card">
+        <div class="pet-photo p4" aria-hidden="true">🐈</div>
+        <div class="pet-info">
+          <h3>Mishi</h3>
+          <p class="pet-meta">Gata · Mediano · Cachorra · Bogotá</p>
+          <a href="#">Ver ficha completa →</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ CÓMO FUNCIONA ============ -->
+  <section id="como-funciona" style="background:var(--papel);">
+    <div class="section-head">
+      <span class="eyebrow">Proceso</span>
+      <h2>Cómo funciona una adopción</h2>
+    </div>
+    <div class="flex-steps">
+      <div class="step"><div class="num">01</div><h3>Explora</h3><p>Filtra el catálogo y conoce la historia de cada mascota publicada por los refugios.</p></div>
+      <div class="step"><div class="num">02</div><h3>Postúlate</h3><p>Completa el formulario de solicitud de adopción con tus datos de contacto.</p></div>
+      <div class="step"><div class="num">03</div><h3>Conecta</h3><p>El refugio revisa tu solicitud y coordina contigo la entrega responsable.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ FORMULARIO DE SOLICITUD DE ADOPCIÓN ============ -->
+  <section class="form-section" id="solicitud">
+    <div class="section-head">
+      <span class="eyebrow">Formulario</span>
+      <h2>Solicitud de adopción</h2>
+      <p>Completa tus datos y el refugio se pondrá en contacto contigo.</p>
+    </div>
+    <form class="card-form" aria-label="Formulario de solicitud de adopción" onsubmit="alert('¡Solicitud enviada! El refugio se pondrá en contacto contigo pronto.'); return false;">
+      <div class="field">
+        <label for="s-nombre">Nombre completo</label>
+        <input type="text" id="s-nombre" name="nombre" required minlength="3" placeholder="Tu nombre">
+      </div>
+      <div class="field">
+        <label for="s-correo">Correo electrónico</label>
+        <input type="email" id="s-correo" name="correo" required placeholder="tucorreo@dominio.com">
+      </div>
+      <div class="field">
+        <label for="s-telefono">Teléfono</label>
+        <input type="tel" id="s-telefono" name="telefono" required pattern="[0-9]{7,10}" placeholder="3001234567">
+      </div>
+      <div class="field">
+        <label for="s-ciudad">Ciudad</label>
+        <input type="text" id="s-ciudad" name="ciudad" required placeholder="Ciudad de residencia">
+      </div>
+      <div class="field full">
+        <label for="s-mascota">Mascota de interés</label>
+        <select id="s-mascota" name="mascota">
+          <option>Manchas — Perro mediano</option>
+          <option>Toby — Gato pequeño</option>
+          <option>Luna — Perra grande</option>
+          <option>Mishi — Gata cachorra</option>
+        </select>
+      </div>
+      <div class="field full">
+        <label for="s-mensaje">Cuéntanos sobre tu hogar</label>
+        <textarea id="s-mensaje" name="mensaje" rows="4" placeholder="Espacio disponible, otras mascotas, experiencia previa..."></textarea>
+        <small>Esta información ayuda al refugio a evaluar tu solicitud.</small>
+      </div>
+      <button type="submit">Enviar solicitud</button>
+    </form>
+  </section>
+
+  <!-- ============ REFUGIOS ============ -->
+  <section id="refugios">
+    <div class="section-head">
+      <span class="eyebrow">Aliados</span>
+      <h2>¿Eres un refugio o fundación?</h2>
+      <p>Regístrate en Huellas, publica tus mascotas disponibles y gestiona las solicitudes de adopción desde un solo panel.</p>
+      <a class="btn-primary" style="display:inline-block;margin-top:1em;background:var(--oxido);color:#fff;" href="#">Registrar mi refugio</a>
+    </div>
+  </section>
+
+  <!-- ============ CONTACTO (sección real con formulario accesible) ============ -->
+  <section id="contacto">
+    <div class="section-head">
+      <span class="eyebrow">Contacto</span>
+      <h2>Escríbenos</h2>
+      <p>¿Tienes dudas sobre el proceso de adopción o quieres aliarte con Huellas? Contáctanos.</p>
+    </div>
+    <div class="contacto-flex">
+      <div class="contacto-info">
+        <div class="item">
+          <span aria-hidden="true">📍</span>
+          <div><b>Ubicación</b><br><span>Bogotá, Colombia</span></div>
+        </div>
+        <div class="item">
+          <span aria-hidden="true">✉️</span>
+          <div><b>Correo</b><br><span>contacto@huellas.co</span></div>
+        </div>
+        <div class="item">
+          <span aria-hidden="true">📞</span>
+          <div><b>Teléfono</b><br><span>+57 300 123 4567</span></div>
+        </div>
+      </div>
+      <form class="contact-form" aria-label="Formulario de contacto" onsubmit="alert('¡Mensaje enviado! Te responderemos pronto.'); return false;">
+        <div class="field">
+          <label for="c-nombre">Nombre</label>
+          <input type="text" id="c-nombre" name="nombre" required placeholder="Tu nombre">
+        </div>
+        <div class="field">
+          <label for="c-correo">Correo electrónico</label>
+          <input type="email" id="c-correo" name="correo" required placeholder="tucorreo@dominio.com">
+        </div>
+        <div class="field full">
+          <label for="c-asunto">Asunto</label>
+          <input type="text" id="c-asunto" name="asunto" placeholder="¿En qué podemos ayudarte?">
+        </div>
+        <div class="field full">
+          <label for="c-mensaje">Mensaje</label>
+          <textarea id="c-mensaje" name="mensaje" rows="4" required placeholder="Escribe tu mensaje..."></textarea>
+        </div>
+        <button type="submit">Enviar mensaje</button>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-flex">
+    <div>
+      <h3>🐾 Huellas</h3>
+      <p style="font-size:.88rem;max-width:32ch;">Plataforma de adopción y bienestar de mascotas. Ingeniería Web I — UMB, 2026.</p>
+    </div>
+    <div>
+      <h3 style="font-size:1rem;">Explorar</h3>
+      <ul>
+        <li><a href="#sobre">Sobre Huellas</a></li>
+        <li><a href="#adopcion">Mascotas en adopción</a></li>
+        <li><a href="#refugios">Refugios</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="font-size:1rem;">Contacto</h3>
+      <ul>
+        <li>contacto@huellas.co</li>
+        <li>Bogotá, Colombia</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Huellas — Proyecto académico UMB</span>
+    <span>Ingeniería Web I — Taller Integrador</span>
+  </div>
+</footer>
+
+</body>
+</html>
